@@ -16,6 +16,7 @@ const initialValues = {
   phoneNo: "",
   password: "",
   confirmPassword: "",
+  isLoggedIn: false,
 };
 
 const validationSchema = Yup.object().shape({
@@ -32,15 +33,19 @@ const validationSchema = Yup.object().shape({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
+  profile: Yup.mixed()
+    .required("Image Required!")
+    .test("fileSize", "File must be less than 2MB", (value) => {
+      return value !== undefined && value && value.size < 2000000;
+    }),
   confirmPassword: Yup.string()
-
     .required("Required")
-
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
 function Form() {
-  const userData = useSelector((state) => state.userData);
+  const reduxStoreData = useSelector((state) => state);
+  const userData = reduxStoreData.userData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profileRef = useRef(null);
@@ -58,11 +63,14 @@ function Form() {
       const reader = new FileReader();
       reader.readAsDataURL(values.profile);
       reader.onloadend = () => {
-        const newuser = { ...values, profile: reader.result };
+        const newuser = { ...values, isLoggedIn: true, profile: reader.result };
         localStorage.setItem("userDetails", JSON.stringify(newuser));
       };
+      console.log(formik.values);
+      console.log(values);
       const reduxData = {
         ...values,
+        isLoggedIn: true,
         profile: URL.createObjectURL(values.profile),
       };
       dispatch(storeUserData(reduxData));
@@ -78,12 +86,14 @@ function Form() {
         <div className="form-group">
           <h2>SignUp</h2>
         </div>
+
         <div className="profile-picture">
           <img src={profile} alt="" />
         </div>
         <button
           type="button"
           className="add-photo"
+          name="profile"
           onClick={() => profileRef.current.click()}
         >
           Photo +
@@ -92,9 +102,15 @@ function Form() {
           value={undefined}
           type="file"
           ref={profileRef}
+          name="profile"
           className="d-none"
           onChange={onProfileChangeHandler}
         />
+        {formik.touched.profile && formik.errors.profile ? (
+          <div style={{ color: "Red", marginLeft: 70, marginTop: 0 }}>
+            {formik.errors.profile}
+          </div>
+        ) : null}
         <FormField
           labelName="Name"
           type="text"

@@ -1,5 +1,4 @@
-import { Action } from "history";
-import { STORE_USER_DATA, GET_USER_DATA } from "../actionTypes/actionTypes";
+import { STORE_USER_DATA, LOGIN_USER } from "../actionTypes/actionTypes";
 
 const initialState = {
   userData: {
@@ -9,6 +8,7 @@ const initialState = {
     phoneNo: "",
     password: "",
     confirmPassword: "",
+    isLoggedIn: false,
   },
 };
 
@@ -19,6 +19,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userData: action.payload,
+      };
+
+    case LOGIN_USER:
+      return {
+        ...state,
+        isLoggedIn: true,
       };
 
     default:

@@ -2,13 +2,21 @@ import React from "react";
 import "./home.css";
 import profile from "../../assets/profile.jpg";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/action/action";
 
 function Home() {
   const userData = useSelector((state) => state.userData);
+  const dispatch = useDispatch();
   console.log(userData);
 
   const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userDetails");
+    // dispatch(loginUser(false));
+    navigate("/");
+  };
 
   return (
     <div className="container-fluid">
@@ -16,7 +24,7 @@ function Home() {
         <button
           type="button"
           className="btn btn-outline-primary"
-          onClick={() => navigate("/")}
+          onClick={logoutHandler}
         >
           Logout
         </button>
