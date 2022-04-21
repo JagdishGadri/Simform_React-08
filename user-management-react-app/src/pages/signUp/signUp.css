@@ -1,0 +1,18 @@
+.signup-form-container{
+    display: flex;
+    margin: 50px auto 100px;
+    height: 500px;
+    width:700px;
+}
+
+
+.form-image{
+    height: 100%;
+    width: 60%;
+    border-radius: 0px 50px 50px 0px;
+}
+
+img {
+    height:100%;
+    width: 100%;
+}

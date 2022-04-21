@@ -1,0 +1,38 @@
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+}
+
+.user {
+  height: 400px;
+  width: 700px;
+  margin: 10% auto;
+  background-color: rgb(207, 243, 232);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  border-radius: 50px;
+}
+
+.user-image img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  margin: -9% 42% 0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row-reverse;
+  border-top: 2px solid rgb(163, 176, 216);
+  border-bottom: 2px solid rgb(163, 175, 211);
+  padding-right: 12px;
+  margin: 10px 0px 0px 0px;
+}
+
+.user-data {
+  margin: 10% 10%;
+  font-weight: 500;
+}
